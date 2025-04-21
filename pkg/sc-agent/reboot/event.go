@@ -27,6 +27,7 @@ func NewSystemRebootedEvent(source string, data RebootData) cloudevents.Event {
 	return event
 }
 
-func NewMarshalledSystemRebootEvent(source string, data RebootData) ([]byte, error) {
-	return json.Marshal(NewSystemRebootedEvent(source, data))
+func NewMarshalledSystemRebootEvent(source string, data RebootData) []byte {
+	m, _ := json.Marshal(NewSystemRebootedEvent(source, data))
+	return m
 }
