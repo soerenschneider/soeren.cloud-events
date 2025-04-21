@@ -6,7 +6,7 @@ import (
 
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 	"github.com/google/uuid"
-	events "soeren.cloud-events/pkg"
+	events "github.com/soerenschneider/soeren.cloud-events"
 )
 
 type RebootData struct {
@@ -15,19 +15,21 @@ type RebootData struct {
 	Status     string `json:"status"`
 }
 
-func NewSystemRebootedEvent(source string, data RebootData) cloudevents.Event {
+func NewSystemRebootedEvent(source string, data *RebootData) cloudevents.Event {
 	event := cloudevents.NewEvent()
 	event.SetSource(source)
 	event.SetType(string(events.TypeSystemRebooted))
 	event.SetID(uuid.New().String())
 	event.SetTime(time.Now())
 	event.SetSubject("os-reboot")
-	event.SetDataContentType(cloudevents.ApplicationJSON)
-	event.SetData(cloudevents.ApplicationJSON, data)
+	if data != nil {
+		event.SetDataContentType(cloudevents.ApplicationJSON)
+		event.SetData(cloudevents.ApplicationJSON, data)
+	}
 	return event
 }
 
-func NewMarshalledSystemRebootEvent(source string, data RebootData) []byte {
+func NewMarshalledSystemRebootEvent(source string, data *RebootData) []byte {
 	m, _ := json.Marshal(NewSystemRebootedEvent(source, data))
 	return m
 }

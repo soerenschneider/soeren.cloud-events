@@ -1,4 +1,4 @@
-package events
+package pkg
 
 type EventTypes string
 
