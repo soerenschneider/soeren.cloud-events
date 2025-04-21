@@ -18,7 +18,7 @@ type RebootData struct {
 func NewSystemRebootedEvent(source string, data *RebootData) cloudevents.Event {
 	event := cloudevents.NewEvent()
 	event.SetSource(source)
-	event.SetType(string(pkg.TypeSecretReplicated))
+	event.SetType(string(pkg.TypeSystemRebooted))
 	event.SetID(uuid.New().String())
 	event.SetTime(time.Now())
 	event.SetSubject("os-reboot")
