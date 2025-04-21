@@ -6,7 +6,7 @@ import (
 
 	cloudevents "github.com/cloudevents/sdk-go/v2"
 	"github.com/google/uuid"
-	events "github.com/soerenschneider/soeren.cloud-events"
+	"github.com/soerenschneider/soeren.cloud-events/pkg"
 )
 
 type RebootData struct {
@@ -18,7 +18,7 @@ type RebootData struct {
 func NewSystemRebootedEvent(source string, data *RebootData) cloudevents.Event {
 	event := cloudevents.NewEvent()
 	event.SetSource(source)
-	event.SetType(string(events.TypeSystemRebooted))
+	event.SetType(string(pkg.TypeSecretReplicated))
 	event.SetID(uuid.New().String())
 	event.SetTime(time.Now())
 	event.SetSubject("os-reboot")
